@@ -1,0 +1,19 @@
+{
+    "name": "kopymaticbasebot",
+    "version": "1.0.1",
+    "description": "A base for all my Discord Bots",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Kopymatic",
+    "license": "ISC",
+    "dependencies": {
+        "eris": "^0.16.1",
+        "sequelize": "^6.17.0"
+    },
+    "devDependencies": {
+        "@types/ws": "^8.5.2",
+        "eslint": "^8.10.0"
+    }
+}
