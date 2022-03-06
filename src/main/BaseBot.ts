@@ -1,5 +1,6 @@
 import Eris from "eris";
 import { Sequelize } from "sequelize";
+import StatsCmd from "./commands/StatsCmd";
 import CommandStats, { setUp } from "./CommandStats";
 import { CommandTypes } from "./utils/CommandUtils";
 import SlashCommand from "./utils/SlashCommand";
@@ -46,6 +47,9 @@ export default class BaseBot {
                 });
 
                 if (options.experimental) {
+                    if (options.statsCommand) {
+                        commands.push(new StatsCmd(this));
+                    }
                     //Loop over all commands and send them to discord as GUILD commands
                     commands.forEach(async (index) => {
                         let newCommand = await client.createGuildCommand(options.devServerId, {
@@ -158,6 +162,12 @@ export default class BaseBot {
                 });
             }
         });
+
+        //Set the status while loading
+        client.editStatus("idle", { name: `Loading...`, type: 3 });
+
+        //Finally, connect the bot.
+        client.connect();
     }
 }
 
@@ -169,4 +179,6 @@ export interface BaseBotOptions {
     devServerId: string;
     green?: number;
     red?: number;
+    statsCommand?: boolean;
+    defaultColor?: number;
 }
