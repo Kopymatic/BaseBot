@@ -1,4 +1,6 @@
-export { default as BaseBot } from "./BaseBot";
+import BaseBot from "./BaseBot";
+
+export default BaseBot;
 export { ButtonPaginator } from "./utils/ButtonPaginator";
 export {
     ButtonStyles,
