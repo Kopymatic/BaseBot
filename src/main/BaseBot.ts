@@ -14,7 +14,7 @@ export default class BaseBot {
     options: BaseBotOptions;
 
     constructor(
-        client: Eris.Client,
+        client: Eris.Client | Eris.CommandClient,
         database: Sequelize,
         commands: SlashCommand[],
         options: BaseBotOptions
