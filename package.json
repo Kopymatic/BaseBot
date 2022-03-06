@@ -1,10 +1,12 @@
 {
-    "name": "kopymaticbasebot",
-    "version": "1.0.1",
+    "name": "@kopymatic/basebot",
+    "version": "1.0.7",
     "description": "A base for all my Discord Bots",
-    "main": "index.js",
+    "main": "dist/main/index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "prepare": "npm run build",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc"
     },
     "author": "Kopymatic",
     "license": "ISC",
@@ -15,5 +17,8 @@
     "devDependencies": {
         "@types/ws": "^8.5.2",
         "eslint": "^8.10.0"
-    }
+    },
+    "files": [
+        "dist/**/*"
+    ]
 }
