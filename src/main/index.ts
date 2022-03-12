@@ -12,3 +12,4 @@ export {
 export { default as InteractionUtils } from "./utils/InteractionUtils";
 export { default as SlashCommand } from "./utils/SlashCommand";
 export { default as CommandStats } from "./CommandStats";
+export { default as Menu } from "./utils/Menu";
