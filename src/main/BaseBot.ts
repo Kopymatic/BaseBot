@@ -56,7 +56,7 @@ export default class BaseBot {
                             name: index.name,
                             description: index.description,
                             defaultPermission: index.defaultPermission,
-                            options: index.options,
+                            options: index.options as any, //Opt out of typing for now to get ts to stfu
                             type: CommandTypes.SLASH,
                         });
                         console.log(
@@ -76,7 +76,7 @@ export default class BaseBot {
                             name: index.name,
                             description: index.description,
                             defaultPermission: index.defaultPermission,
-                            options: index.options,
+                            options: index.options as any,
                             type: CommandTypes.SLASH,
                         });
                         console.log(

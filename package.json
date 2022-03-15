@@ -11,6 +11,7 @@
     "author": "Kopymatic",
     "license": "ISC",
     "dependencies": {
+        "@kopymatic/eris": "^0.16.2-dev",
         "eris": "^0.16.1",
         "sequelize": "^6.17.0"
     },

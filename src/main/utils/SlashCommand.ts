@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Eris from "eris";
+import { default as KopyEris } from "@kopymatic/eris";
 
 export default class SlashCommand {
     /**
@@ -17,7 +18,7 @@ export default class SlashCommand {
     /**
      * the parameters for the command, max 25
      */
-    options: Eris.ApplicationCommandOptions[];
+    options: Eris.ApplicationCommandOptions[] | KopyEris.ApplicationCommandOptions[];
     /**
      * function to run when the command is recieved
      * @param  {Eris.CommandInteraction} interaction

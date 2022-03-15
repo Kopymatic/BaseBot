@@ -6,11 +6,12 @@ import {
     Interaction,
     CommandInteraction,
     InteractionContent,
+    CommandClient,
 } from "eris";
 import InteractionUtils from "./InteractionUtils";
 
 export default class Menu extends EventEmitter {
-    protected client: Client;
+    protected client: Client | CommandClient;
     protected interaction: CommandInteraction;
     protected message: InteractionContent;
     protected buttons: MenuButton[];
@@ -18,7 +19,7 @@ export default class Menu extends EventEmitter {
     protected timeout: NodeJS.Timeout;
 
     constructor(
-        client: Client,
+        client: Client | CommandClient,
         interaction: CommandInteraction,
         message: InteractionContent,
         buttons: MenuButton[],
@@ -60,6 +61,7 @@ export default class Menu extends EventEmitter {
         }
 
         if (!this.options.allowedUsers.includes(InteractionUtils.getUser(interaction).id)) {
+            interaction.createMessage("This menu is not for you");
             return;
         }
 
