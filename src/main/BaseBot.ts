@@ -1,4 +1,4 @@
-import Eris from "eris";
+import Eris from "@kopymatic/eris";
 import { Sequelize } from "sequelize";
 import StatsCmd from "./commands/StatsCmd";
 import CommandStats, { setUp } from "./CommandStats";

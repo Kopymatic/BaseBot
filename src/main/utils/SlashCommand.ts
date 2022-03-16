@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Eris from "eris";
+import Eris from "@kopymatic/eris";
 import { default as KopyEris } from "@kopymatic/eris";
 
 export default class SlashCommand {

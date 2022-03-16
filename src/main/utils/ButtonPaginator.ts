@@ -9,7 +9,7 @@ import {
     InteractionButton,
     Emoji,
     Interaction,
-} from "eris";
+} from "@kopymatic/eris";
 import { ButtonStyles, ComponentTypes } from "./CommandUtils";
 
 export class ButtonPaginator extends EventEmitter {

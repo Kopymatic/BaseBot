@@ -1,4 +1,4 @@
-import Eris from "eris";
+import Eris from "@kopymatic/eris";
 import BaseBot, { BaseBotOptions } from "../BaseBot";
 import CommandStats from "../CommandStats";
 import { ButtonPaginator } from "../utils/ButtonPaginator";
