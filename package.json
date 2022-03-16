@@ -1,6 +1,6 @@
 {
     "name": "@kopymatic/basebot",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "description": "A base for all my Discord Bots",
     "main": "dist/main/index.js",
     "scripts": {
