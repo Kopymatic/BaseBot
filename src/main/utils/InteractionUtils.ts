@@ -1,4 +1,4 @@
-import Eris from "@kopymatic/eris";
+import Eris from "eris";
 
 export default class InteractionUtils {
     /**

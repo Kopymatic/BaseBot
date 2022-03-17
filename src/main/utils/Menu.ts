@@ -7,7 +7,7 @@ import {
     CommandInteraction,
     InteractionContent,
     CommandClient,
-} from "@kopymatic/eris";
+} from "eris";
 import InteractionUtils from "./InteractionUtils";
 
 export default class Menu extends EventEmitter {

@@ -1,4 +1,4 @@
-import Eris from "@kopymatic/eris";
+import Eris from "eris";
 import BaseBot, { BaseBotOptions } from "../BaseBot";
 import CommandStats from "../CommandStats";
 import { ButtonPaginator } from "../utils/ButtonPaginator";
@@ -9,6 +9,7 @@ export default class StatsCmd extends SlashCommand {
 
     constructor(baseBot: BaseBot) {
         super();
+        this.bot = baseBot;
         this.name = "Stats";
         this.description = "Bot statistics!";
         this.onRun = async (interaction) => {
