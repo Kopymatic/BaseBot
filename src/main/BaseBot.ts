@@ -1,6 +1,7 @@
 import Eris from "eris";
 import { Sequelize } from "sequelize";
 import StatsCmd from "./commands/StatsCmd";
+import UpdateCommandsCmd from "./commands/UpdateCommands";
 import CommandStats, { setUp } from "./CommandStats";
 import { CommandTypes } from "./utils/CommandUtils";
 import SlashCommand from "./utils/SlashCommand";
@@ -46,49 +47,54 @@ export default class BaseBot {
                     index.save();
                 });
 
-                if (options.experimental) {
-                    if (options.statsCommand) {
-                        commands.push(new StatsCmd(this));
+                if (this.options.autoSendCommands) {
+                    if (options.experimental) {
+                        if (options.statsCommand) {
+                            commands.push(new StatsCmd(this));
+                        }
+                        if (options.updateCommandsCommand) {
+                            commands.push(new UpdateCommandsCmd(this));
+                        }
+                        //Loop over all commands and send them to discord as GUILD commands
+                        commands.forEach(async (index) => {
+                            let newCommand = await client.createGuildCommand(options.devServerId, {
+                                name: index.name,
+                                description: index.description,
+                                defaultPermission: index.defaultPermission,
+                                options: index.options as any, //Opt out of typing for now to get ts to stfu
+                                type: CommandTypes.SLASH,
+                            });
+                            console.log(
+                                `Guild command ${index.name} created with id ${newCommand.id} in guild ${newCommand.guild_id}`
+                            );
+
+                            //If the command is marked as to be deleted, delete it
+                            if (index.toDelete) {
+                                client.deleteGuildCommand(newCommand.guild_id, newCommand.id);
+                                console.log(`Command ${index.name} deleted`);
+                            }
+                        });
+                    } else {
+                        //Loop over all commands and send them to discord as GLOBAL commands
+                        commands.forEach(async (index) => {
+                            let newCommand = await client.createCommand({
+                                name: index.name,
+                                description: index.description,
+                                defaultPermission: index.defaultPermission,
+                                options: index.options as any,
+                                type: CommandTypes.SLASH,
+                            });
+                            console.log(
+                                `Global command ${index.name} created with id ${newCommand.id}`
+                            );
+
+                            //If the command is marked as to be deleted, delete it
+                            if (index.toDelete) {
+                                client.deleteCommand(newCommand.id);
+                                console.log(`Command ${index.name} deleted`);
+                            }
+                        });
                     }
-                    //Loop over all commands and send them to discord as GUILD commands
-                    commands.forEach(async (index) => {
-                        let newCommand = await client.createGuildCommand(options.devServerId, {
-                            name: index.name,
-                            description: index.description,
-                            defaultPermission: index.defaultPermission,
-                            options: index.options as any, //Opt out of typing for now to get ts to stfu
-                            type: CommandTypes.SLASH,
-                        });
-                        console.log(
-                            `Guild command ${index.name} created with id ${newCommand.id} in guild ${newCommand.guild_id}`
-                        );
-
-                        //If the command is marked as to be deleted, delete it
-                        if (index.toDelete) {
-                            client.deleteGuildCommand(newCommand.guild_id, newCommand.id);
-                            console.log(`Command ${index.name} deleted`);
-                        }
-                    });
-                } else {
-                    //Loop over all commands and send them to discord as GLOBAL commands
-                    commands.forEach(async (index) => {
-                        let newCommand = await client.createCommand({
-                            name: index.name,
-                            description: index.description,
-                            defaultPermission: index.defaultPermission,
-                            options: index.options as any,
-                            type: CommandTypes.SLASH,
-                        });
-                        console.log(
-                            `Global command ${index.name} created with id ${newCommand.id}`
-                        );
-
-                        //If the command is marked as to be deleted, delete it
-                        if (index.toDelete) {
-                            client.deleteCommand(newCommand.id);
-                            console.log(`Command ${index.name} deleted`);
-                        }
-                    });
                 }
 
                 //Create a log in a configured logging channel that the bot is online
@@ -181,4 +187,7 @@ export interface BaseBotOptions {
     red?: number;
     statsCommand?: boolean;
     defaultColor?: number;
+    autoSendCommands: boolean;
+    ownerID: string;
+    updateCommandsCommand: boolean;
 }
