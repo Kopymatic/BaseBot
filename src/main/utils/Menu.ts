@@ -9,6 +9,7 @@ import {
     CommandClient,
 } from "eris";
 import InteractionUtils from "./InteractionUtils";
+import { ResponseFlags } from "./CommandUtils";
 
 export default class Menu extends EventEmitter {
     protected client: Client | CommandClient;
@@ -61,7 +62,10 @@ export default class Menu extends EventEmitter {
         }
 
         if (!this.options.allowedUsers.includes(InteractionUtils.getUser(interaction).id)) {
-            interaction.createMessage("This menu is not for you");
+            interaction.createMessage({
+                content: "This menu is not for you",
+                flags: ResponseFlags.EPHEMERAL,
+            });
             return;
         }
 
