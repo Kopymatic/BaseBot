@@ -8,7 +8,7 @@ export default class UpdateCommandsCmd extends SlashCommand {
         super();
         this.name = "UpdateCommands";
         this.description = "Resend commands to discord. OWNER ONLY.";
-        this.onRun = (interaction) => {
+        this.onRun = async (interaction) => {
             const user = this.getUser(interaction);
             if (user.id !== bot.options.ownerID) {
                 interaction.createFollowup({
@@ -16,6 +16,7 @@ export default class UpdateCommandsCmd extends SlashCommand {
                     flags: ResponseFlags.EPHEMERAL,
                 });
             } else {
+                interaction.createFollowup("Updating commands...");
                 if (bot.options.experimental) {
                     if (bot.options.statsCommand) {
                         bot.commands.push(new StatsCmd(bot));
@@ -72,6 +73,7 @@ export default class UpdateCommandsCmd extends SlashCommand {
                         }
                     });
                 }
+                (await interaction.getOriginalMessage()).edit("Successsfully updated!");
             }
         };
     }
