@@ -153,6 +153,7 @@ export default class BaseBot {
                         //Once we figure out what command we recieved, acknowledge it and run its onRun function.
                         await interaction.acknowledge();
                         try {
+                            console.info(`Command ${command.name} executed`);
                             await command.onRun(interaction);
                         } catch (error) {
                             console.error(error);
