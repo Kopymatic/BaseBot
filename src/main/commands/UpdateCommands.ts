@@ -18,12 +18,6 @@ export default class UpdateCommandsCmd extends SlashCommand {
             } else {
                 interaction.createFollowup("Updating commands...");
                 if (bot.options.experimental) {
-                    if (bot.options.statsCommand) {
-                        bot.commands.push(new StatsCmd(bot));
-                    }
-                    if (bot.options.updateCommandsCommand) {
-                        bot.commands.push(new UpdateCommandsCmd(bot));
-                    }
                     //Loop over all commands and send them to discord as GUILD commands
                     bot.commands.forEach(async (index) => {
                         let newCommand = await bot.client.createGuildCommand(
@@ -47,12 +41,6 @@ export default class UpdateCommandsCmd extends SlashCommand {
                         }
                     });
                 } else {
-                    if (bot.options.statsCommand) {
-                        bot.commands.push(new StatsCmd(bot));
-                    }
-                    if (bot.options.updateCommandsCommand) {
-                        bot.commands.push(new UpdateCommandsCmd(bot));
-                    }
                     //Loop over all commands and send them to discord as GLOBAL commands
                     bot.commands.forEach(async (index) => {
                         let newCommand = await bot.client.createCommand({

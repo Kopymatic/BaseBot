@@ -47,14 +47,15 @@ export default class BaseBot {
                     index.save();
                 });
 
+                if (options.statsCommand) {
+                    commands.push(new StatsCmd(this));
+                }
+                if (options.updateCommandsCommand) {
+                    commands.push(new UpdateCommandsCmd(this));
+                }
+
                 if (this.options.autoSendCommands) {
                     if (options.experimental) {
-                        if (options.statsCommand) {
-                            commands.push(new StatsCmd(this));
-                        }
-                        if (options.updateCommandsCommand) {
-                            commands.push(new UpdateCommandsCmd(this));
-                        }
                         //Loop over all commands and send them to discord as GUILD commands
                         commands.forEach(async (index) => {
                             let newCommand = await client.createGuildCommand(options.devServerId, {
@@ -75,12 +76,6 @@ export default class BaseBot {
                             }
                         });
                     } else {
-                        if (options.statsCommand) {
-                            commands.push(new StatsCmd(this));
-                        }
-                        if (options.updateCommandsCommand) {
-                            commands.push(new UpdateCommandsCmd(this));
-                        }
                         //Loop over all commands and send them to discord as GLOBAL commands
                         commands.forEach(async (index) => {
                             let newCommand = await client.createCommand({
