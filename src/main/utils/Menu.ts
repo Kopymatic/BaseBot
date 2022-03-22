@@ -9,7 +9,7 @@ import {
     CommandClient,
 } from "eris";
 import InteractionUtils from "./InteractionUtils";
-import { ResponseFlags } from "./CommandUtils";
+import { ComponentTypes, ResponseFlags } from "./CommandUtils";
 
 export default class Menu extends EventEmitter {
     protected client: Client | CommandClient;
@@ -40,12 +40,38 @@ export default class Menu extends EventEmitter {
     private async initialize() {
         this.client.on("interactionCreate", this.handleButtonPress);
 
-        this.once("end", () => {
+        this.once("end", async () => {
+            this.buttons.forEach((button: MenuButton) => {
+                button.button.disabled = true;
+            });
+
+            let buttons: any = this.buttons.map((button: MenuButton) => {
+                return button.button;
+            });
+
+            this.message.components = [{ type: ComponentTypes.ActionRow, components: buttons }];
+
+            let originalMessage = await this.interaction.getOriginalMessage();
+            originalMessage.edit(this.message);
+
             clearTimeout(this.timeout);
             this.client.off("interactionCreate", this.handleButtonPress);
         });
 
-        this.once("cancel", () => {
+        this.once("cancel", async () => {
+            this.buttons.forEach((button: MenuButton) => {
+                button.button.disabled = true;
+            });
+
+            let buttons: any = this.buttons.map((button: MenuButton) => {
+                return button.button;
+            });
+
+            this.message.components = [{ type: ComponentTypes.ActionRow, components: buttons }];
+
+            let originalMessage = await this.interaction.getOriginalMessage();
+            originalMessage.edit(this.message);
+
             clearTimeout(this.timeout);
             this.client.off("interactionCreate", this.handleButtonPress);
         });
